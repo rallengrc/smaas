@@ -11,7 +11,7 @@ keywords:
 category: index
 classification: 🟢🛡️ General
 last_updated: '2026-10-19'
-author: GitHub Copilot (VS Code) + Rick Allen
+author: thatsafact
 ai_search_aliases:
 - timeline index
 - find monthly logs

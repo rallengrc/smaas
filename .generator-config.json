@@ -1,6 +1,6 @@
 {
   "doc_metadata": {
-    "Projects/Burstable MLaaS/Home.md": {
+    "Projects/smaas/Home.md": {
       "title": "Burstable MLaaS — Project Home & Map of Content",
       "description": "Map of content (MOC) and central hub for the GE Vernova ARC Burstable MLaaS project engagement",
       "keywords": [
@@ -23,7 +23,7 @@
       "tldr": "Master project navigation hub for LTI's engagement with GE Vernova ARC to design, deploy, and support an AWS GPU environment for surrogate ML modeling.",
       "use_for": "Navigating all project documentation, SOW contracts, architecture designs, timelines, and meeting notes."
     },
-    "Projects/Burstable MLaaS/Decisions Log.md": {
+    "Projects/smaas/Decisions Log.md": {
       "title": "Decisions Log — Burstable MLaaS",
       "description": "Chronological record of key architectural, contractual, and technical decisions for Burstable MLaaS",
       "keywords": [
@@ -44,7 +44,7 @@
       "tldr": "Running decision log tracking technical, infrastructure, and contractual decisions made across the Burstable MLaaS engagement.",
       "use_for": "Reviewing historical context, rationale, and approvals for key project decisions."
     },
-    "Projects/Burstable MLaaS/Risks & Open Questions.md": {
+    "Projects/smaas/Risks & Open Questions.md": {
       "title": "Risks & Open Questions — Burstable MLaaS",
       "description": "Tracked technical, operational, and contractual risks and open questions for the Burstable MLaaS project",
       "keywords": [
@@ -65,7 +65,7 @@
       "tldr": "Active register of technical uncertainties, team staffing considerations, scope boundaries, and delivery risks.",
       "use_for": "Tracking unresolved questions and assessing project blockers or risk mitigations."
     },
-    "Projects/Burstable MLaaS/Architecture/Build Analysis - Target Platform on AWS.md": {
+    "Projects/smaas/Architecture/Build Analysis - Target Platform on AWS.md": {
       "title": "Build Analysis — Target Platform on AWS",
       "description": "Gap analysis between SOW commitments and the full Quantum Black target architecture for GE Vernova ARC",
       "keywords": [
@@ -87,7 +87,7 @@
       "tldr": "Detailed technical comparison detailing what it takes to build an ARC-owned equivalent of the Quantum Black platform on AWS versus current SOW scope.",
       "use_for": "Evaluating the technical gap, required AWS services, and scope boundary between static servers and burstable EKS."
     },
-    "Projects/Burstable MLaaS/Architecture/On-Demand MLaaS POC.md": {
+    "Projects/smaas/Architecture/On-Demand MLaaS POC.md": {
       "title": "On-Demand MLaaS POC Architecture",
       "description": "Phase 2 proof-of-concept design for dynamic burstable GPU capacity on AWS using Karpenter and EKS",
       "keywords": [
@@ -109,7 +109,7 @@
       "tldr": "Architecture plan for transitioning from static GPU servers to dynamic, on-demand GPU capacity on AWS during Phase 2.",
       "use_for": "Understanding proof-of-concept scaling goals, burst triggers, cost controls, and milestone criteria."
     },
-    "Projects/Burstable MLaaS/Architecture/QB Application-Level Architecture (EKS).md": {
+    "Projects/smaas/Architecture/QB Application-Level Architecture (EKS).md": {
       "title": "QB Application-Level Architecture (EKS)",
       "description": "Deep-dive analysis of Quantum Black application-level microservices, workflows, and EKS deployments",
       "keywords": [
@@ -129,7 +129,7 @@
       "tldr": "Deconstruction of Quantum Black's application services, data pipelines, and UI/backend container orchestration on AWS EKS.",
       "use_for": "Analyzing the software tier, metadata databases, and service communication of the reference platform."
     },
-    "Projects/Burstable MLaaS/Architecture/QB Reference Architecture.md": {
+    "Projects/smaas/Architecture/QB Reference Architecture.md": {
       "title": "QB Reference Architecture",
       "description": "Architectural breakdown and reverse-engineering of Quantum Black's multi-AZ AWS surrogate modeling platform",
       "keywords": [
@@ -150,7 +150,7 @@
       "tldr": "Comprehensive blueprint of the Quantum Black reference platform featuring Karpenter auto-scaling, EFS/S3 storage, Aurora PostgreSQL, and ALB/OIDC authentication.",
       "use_for": "Serving as the target architectural benchmark for GE Vernova's internal surrogate modeling platform."
     },
-    "Projects/Burstable MLaaS/Architecture/Static AWS GPU Environment.md": {
+    "Projects/smaas/Architecture/Static AWS GPU Environment.md": {
       "title": "Static AWS GPU Environment Architecture",
       "description": "Phase 1 specification for standing up three fixed AWS EC2 GPU instances mirroring on-prem Alpharetta servers",
       "keywords": [
@@ -172,7 +172,7 @@
       "tldr": "Specification for Phase 1 delivery of 3 static EC2 GPU servers (24 GPUs total) configured with shell/CLI access for GE Vernova researchers.",
       "use_for": "Reviewing Phase 1 hardware sizing, networking, access setup, and software configurations."
     },
-    "Projects/Burstable MLaaS/Architecture/Surrogate ML Accelerator - Electrification.md": {
+    "Projects/smaas/Architecture/Surrogate ML Accelerator - Electrification.md": {
       "title": "Surrogate ML Accelerator — Electrification",
       "description": "Domain background and computational workflow analysis for GE Vernova wind blade and electrification surrogate models",
       "keywords": [
@@ -194,7 +194,7 @@
       "tldr": "Domain overview of surrogate ML workflows that replace expensive CFD/Ansys simulations with accelerated deep learning models.",
       "use_for": "Understanding the scientific and machine learning workloads running on the GPU infrastructure."
     },
-    "Projects/Burstable MLaaS/Meetings/2026-07-30 Discovery Meeting.md": {
+    "Projects/smaas/Meetings/2026-07-30 Discovery Meeting.md": {
       "title": "2026-07-30 Discovery Meeting Notes",
       "description": "Initial technical discovery meeting between GE Vernova ARC and LTI discussing surrogate platform requirements",
       "keywords": [
@@ -214,7 +214,7 @@
       "tldr": "Foundational discovery discussion capturing GE Vernova's desire to transition from Quantum Black to an in-house ARC platform.",
       "use_for": "Tracing original stakeholder requirements, vision statements, and scope boundaries."
     },
-    "Projects/Burstable MLaaS/Meetings/2026-08-11 Engagement Structure Email.md": {
+    "Projects/smaas/Meetings/2026-08-11 Engagement Structure Email.md": {
       "title": "2026-08-11 Engagement Structure Email",
       "description": "Clarification of SOW engagement model, deliverables, and team responsibilities between GE Vernova and LTI",
       "keywords": [
@@ -234,7 +234,7 @@
       "tldr": "Key correspondence establishing that the engagement operates on milestone-based deliverables rather than pure staff augmentation.",
       "use_for": "Referencing agreed engagement boundaries and communication protocols."
     },
-    "Projects/Burstable MLaaS/Meetings/Meetings.md": {
+    "Projects/smaas/Meetings/Meetings.md": {
       "title": "Meetings Index — Burstable MLaaS",
       "description": "Chronological directory of meeting agendas, notes, and stakeholder syncs for Burstable MLaaS",
       "keywords": [
@@ -253,7 +253,7 @@
       "tldr": "Index and link table of all recorded discovery, kickoff, and governance meetings across the engagement.",
       "use_for": "Locating meeting records and historical discussions."
     },
-    "Projects/Burstable MLaaS/Plans/EKS Platform Replication Plan.md": {
+    "Projects/smaas/Plans/EKS Platform Replication Plan.md": {
       "title": "EKS Platform Replication Plan",
       "description": "Technical implementation plan for replicating the QB reference platform on Amazon EKS for GE Vernova",
       "keywords": [
@@ -273,7 +273,7 @@
       "tldr": "Step-by-step infrastructure provisioning roadmap for deploying the Kubernetes, Karpenter, storage, and networking layers on AWS.",
       "use_for": "Guiding technical build tasks for future EKS-based burstable deployments."
     },
-    "Projects/Burstable MLaaS/Plans/LTI Internal Kickoff Brief.md": {
+    "Projects/smaas/Plans/LTI Internal Kickoff Brief.md": {
       "title": "LTI Internal Kickoff Brief",
       "description": "Internal briefing for the LTI delivery team detailing staffing, roles, timelines, and technical expectations",
       "keywords": [
@@ -293,7 +293,7 @@
       "tldr": "Internal briefing document outlining team allocations (Nam, Chris, Rick), milestone dates, and execution priorities.",
       "use_for": "Reviewing team roles, operational norms, and project expectations."
     },
-    "Projects/Burstable MLaaS/Plans/Phase 1 Project Plan.md": {
+    "Projects/smaas/Plans/Phase 1 Project Plan.md": {
       "title": "Phase 1 Project Plan — Burstable MLaaS",
       "description": "Authoritative delivery plan for Phase 1 static environment build, testing, and deployment (Oct-Nov 2026)",
       "keywords": [
@@ -314,7 +314,7 @@
       "tldr": "Authoritative plan for Phase 1, detailing the 8 specific deliverables required to deploy the static AWS GPU environment.",
       "use_for": "Tracking deliverable completion, validation criteria, and schedule baselines."
     },
-    "Projects/Burstable MLaaS/Reference/Ray and Flyte - Orchestration and Distributed Compute.md": {
+    "Projects/smaas/Reference/Ray and Flyte - Orchestration and Distributed Compute.md": {
       "title": "Ray and Flyte — Orchestration and Distributed Compute Reference",
       "description": "Comparative analysis and integration patterns for Ray distributed compute and Flyte workflow orchestration",
       "keywords": [
@@ -335,7 +335,7 @@
       "tldr": "Technical reference exploring how Ray (distributed computation, model training) and Flyte (workflow orchestration, data DAGs) combine in an MLaaS platform.",
       "use_for": "Designing ML workflow engines and distributed task execution architectures."
     },
-    "Projects/Burstable MLaaS/Reference/Reference.md": {
+    "Projects/smaas/Reference/Reference.md": {
       "title": "Reference Index — Burstable MLaaS",
       "description": "Index of external architecture documents, vendor references, and engineering notes for Burstable MLaaS",
       "keywords": [
@@ -353,7 +353,7 @@
       "tldr": "Directory of architectural reference materials, hardware guides, and distributed computing literature.",
       "use_for": "Finding background research and architecture standards."
     },
-    "Projects/Burstable MLaaS/SOW/SOW - Burstable MLaaS.md": {
+    "Projects/smaas/SOW/SOW - Burstable MLaaS.md": {
       "title": "SOW — Burstable MLaaS Contract Terms & Scope",
       "description": "Executed statement of work (SOW) terms, deliverables, team allocations, and governance for GE Vernova engagement",
       "keywords": [
@@ -375,7 +375,7 @@
       "tldr": "Full summary of the executed SOW between GE Vernova and LTI, detailing Phase 1/2 scope, resource hours, term dates, and change processes.",
       "use_for": "Verifying contractual scope, delivery obligations, exclusions, and governance rules."
     },
-    "Projects/Burstable MLaaS/Stakeholders/GE Vernova ARC.md": {
+    "Projects/smaas/Stakeholders/GE Vernova ARC.md": {
       "title": "Stakeholders — GE Vernova ARC",
       "description": "Organizational profile, leadership contacts, and operational stakeholders at GE Vernova Advanced Research Center",
       "keywords": [
@@ -395,7 +395,7 @@
       "tldr": "Directory of client-side stakeholders, technical leads, and research managers at GE Vernova ARC.",
       "use_for": "Identifying key contacts, escalation paths, and stakeholder roles."
     },
-    "Projects/Burstable MLaaS/Status Updates/Status Updates.md": {
+    "Projects/smaas/Status Updates/Status Updates.md": {
       "title": "Status Updates Index — Burstable MLaaS",
       "description": "Log and template repository for weekly and monthly project status reports for Burstable MLaaS",
       "keywords": [
@@ -414,7 +414,7 @@
       "tldr": "Central log linking all weekly and monthly status updates for the Burstable MLaaS delivery engagement.",
       "use_for": "Tracking ongoing delivery cadence, team hours, and weekly milestone achievements."
     },
-    "Projects/Burstable MLaaS/Team/Chris Burke.md": {
+    "Projects/smaas/Team/Chris Burke.md": {
       "title": "Team Profile — Chris Burke",
       "description": "Role profile and engagement responsibilities for Chris Burke, Senior Cloud Infrastructure Engineer at LTI",
       "keywords": [
@@ -433,7 +433,7 @@
       "tldr": "Profile for Chris Burke, Senior Cloud Infrastructure Engineer on the Burstable MLaaS engagement (50% allocation).",
       "use_for": "Checking team responsibilities, specialization areas, and contact details."
     },
-    "Projects/Burstable MLaaS/Team/Michael Young.md": {
+    "Projects/smaas/Team/Michael Young.md": {
       "title": "Team Profile — Michael Young",
       "description": "Role profile and leadership responsibilities for Michael Young, Engagement Director at LTI",
       "keywords": [
@@ -452,7 +452,7 @@
       "tldr": "Profile for Michael Young, Engagement Director overseeing client relations and contractual alignment.",
       "use_for": "Escalating commercial, staffing, or contract questions."
     },
-    "Projects/Burstable MLaaS/Team/Nam Park.md": {
+    "Projects/smaas/Team/Nam Park.md": {
       "title": "Team Profile — Nam Park",
       "description": "Role profile and technical responsibilities for Nam Park, Senior Cloud Infrastructure Engineer at LTI",
       "keywords": [
@@ -473,7 +473,7 @@
       "tldr": "Profile for Nam Park, Senior Cloud Infrastructure Engineer dedicated 100% to infrastructure design and build.",
       "use_for": "Directing AWS architecture, Terraform, and technical infrastructure queries."
     },
-    "Projects/Burstable MLaaS/Team/Rick Allen.md": {
+    "Projects/smaas/Team/Rick Allen.md": {
       "title": "Team Profile — Rick Allen",
       "description": "Role profile and responsibilities for Rick Allen, Senior Cloud Infrastructure Engineer & AI Systems Lead at LTI",
       "keywords": [
@@ -493,7 +493,7 @@
       "tldr": "Profile for Rick Allen, Senior Cloud Infrastructure Engineer contributing to architecture, automation, and AI workspace systems (50% allocation).",
       "use_for": "Inquiries regarding AI workspace workflows, search routing, and automation."
     },
-    "Projects/Burstable MLaaS/Timeline/2026-09 September.md": {
+    "Projects/smaas/Timeline/2026-09 September.md": {
       "title": "Timeline — 2026-09 September Mobilization",
       "description": "Activity log and milestone records for the pre-Phase 1 mobilization period in September 2026",
       "keywords": [
@@ -512,7 +512,7 @@
       "tldr": "Monthly timeline log covering initial team onboarding, contract finalization, and preliminary AWS access requests.",
       "use_for": "Reviewing pre-kickoff mobilization milestones."
     },
-    "Projects/Burstable MLaaS/Timeline/2026-10 October.md": {
+    "Projects/smaas/Timeline/2026-10 October.md": {
       "title": "Timeline — 2026-10 October Phase 1 Kickoff",
       "description": "Phase 1 execution log and deliverables tracking for October 2026 on the Burstable MLaaS project",
       "keywords": [
@@ -532,7 +532,7 @@
       "tldr": "Execution log detailing Phase 1 kickoff, static EC2 server provisioning, VPC configuration, and baseline validation.",
       "use_for": "Tracking current October delivery milestones and weekly achievements."
     },
-    "Projects/Burstable MLaaS/Timeline/2026-11 November.md": {
+    "Projects/smaas/Timeline/2026-11 November.md": {
       "title": "Timeline — 2026-11 November Phase 1 Completion",
       "description": "Phase 1 delivery completion and handoff milestones for November 2026",
       "keywords": [
@@ -551,7 +551,7 @@
       "tldr": "Projected timeline for completing the 8 Phase 1 deliverables, user acceptance testing, and researcher access handover.",
       "use_for": "Planning Phase 1 sign-off and environment acceptance."
     },
-    "Projects/Burstable MLaaS/Timeline/2026-12 December.md": {
+    "Projects/smaas/Timeline/2026-12 December.md": {
       "title": "Timeline — 2026-12 December Phase 2 Initiation",
       "description": "Phase 2 support transition and burstable POC exploration log for December 2026",
       "keywords": [
@@ -570,7 +570,7 @@
       "tldr": "Schedule of Phase 2 activities, including static environment support, researcher troubleshooting, and on-demand POC prototyping.",
       "use_for": "Planning December support coverage and POC milestones."
     },
-    "Projects/Burstable MLaaS/Timeline/2027-01 January.md": {
+    "Projects/smaas/Timeline/2027-01 January.md": {
       "title": "Timeline — 2027-01 January Contract Evaluation",
       "description": "Milestones for January 2027 covering Phase 2 enhancements and SOW contract term extension",
       "keywords": [
@@ -589,7 +589,7 @@
       "tldr": "Milestone planning for January 2027, focusing on ongoing environment enhancements, POC review, and contract extension negotiations.",
       "use_for": "Tracking contract renewal dates and mid-Phase 2 deliverables."
     },
-    "Projects/Burstable MLaaS/Timeline/2027-02 February.md": {
+    "Projects/smaas/Timeline/2027-02 February.md": {
       "title": "Timeline — 2027-02 February Phase 2 Conclusion",
       "description": "Final milestones, handoff documentation, and project closure log for February 2027",
       "keywords": [
@@ -610,7 +610,7 @@
     }
   },
   "indices": {
-    "Projects/Burstable MLaaS/_INDEX.md": {
+    "Projects/smaas/_INDEX.md": {
       "title": "Burstable MLaaS Project Index",
       "description": "Master directory index for the GE Vernova ARC Burstable MLaaS delivery engagement",
       "keywords": [
@@ -687,7 +687,7 @@
         ]
       ]
     },
-    "Projects/Burstable MLaaS/Architecture/_INDEX.md": {
+    "Projects/smaas/Architecture/_INDEX.md": {
       "title": "Burstable MLaaS Architecture Index",
       "description": "Index of infrastructure specifications, cloud architectures, and surrogate modeling blueprints",
       "keywords": [
@@ -760,7 +760,7 @@
         ]
       ]
     },
-    "Projects/Burstable MLaaS/Meetings/_INDEX.md": {
+    "Projects/smaas/Meetings/_INDEX.md": {
       "title": "Burstable MLaaS Meetings Index",
       "description": "Index of stakeholder discovery meetings, alignment emails, and governance syncs",
       "keywords": [
@@ -806,7 +806,7 @@
         ]
       ]
     },
-    "Projects/Burstable MLaaS/Plans/_INDEX.md": {
+    "Projects/smaas/Plans/_INDEX.md": {
       "title": "Burstable MLaaS Plans Index",
       "description": "Index of delivery plans, technical implementation roadmaps, and internal briefing briefs",
       "keywords": [
@@ -852,7 +852,7 @@
         ]
       ]
     },
-    "Projects/Burstable MLaaS/Reference/_INDEX.md": {
+    "Projects/smaas/Reference/_INDEX.md": {
       "title": "Burstable MLaaS Reference Index",
       "description": "Index of distributed computing references, architecture research, and technology comparisons",
       "keywords": [
@@ -909,7 +909,7 @@
         ]
       ]
     },
-    "Projects/Burstable MLaaS/SOW/_INDEX.md": {
+    "Projects/smaas/SOW/_INDEX.md": {
       "title": "Burstable MLaaS SOW Index",
       "description": "Index of contractual agreements, statements of work, and scope documents for Burstable MLaaS",
       "keywords": [
@@ -941,7 +941,7 @@
         ]
       ]
     },
-    "Projects/Burstable MLaaS/Stakeholders/_INDEX.md": {
+    "Projects/smaas/Stakeholders/_INDEX.md": {
       "title": "Burstable MLaaS Stakeholders Index",
       "description": "Index of client profiles, organizational context, and key contacts at GE Vernova ARC",
       "keywords": [
@@ -967,7 +967,7 @@
         ]
       ]
     },
-    "Projects/Burstable MLaaS/Status Updates/_INDEX.md": {
+    "Projects/smaas/Status Updates/_INDEX.md": {
       "title": "Burstable MLaaS Status Updates Index",
       "description": "Index of project status updates, progress reports, and weekly delivery logs",
       "keywords": [
@@ -992,7 +992,7 @@
         ]
       ]
     },
-    "Projects/Burstable MLaaS/Team/_INDEX.md": {
+    "Projects/smaas/Team/_INDEX.md": {
       "title": "Burstable MLaaS Team Profiles Index",
       "description": "Index of team profiles, engineering roles, and allocations on the Burstable MLaaS engagement",
       "keywords": [
@@ -1034,7 +1034,7 @@
         ]
       ]
     },
-    "Projects/Burstable MLaaS/Timeline/_INDEX.md": {
+    "Projects/smaas/Timeline/_INDEX.md": {
       "title": "Burstable MLaaS Timeline Index",
       "description": "Index of monthly timeline notes, milestone logs, and execution schedules from September 2026 to February 2027",
       "keywords": [
