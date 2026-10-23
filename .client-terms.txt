@@ -1,0 +1,27 @@
+# Private client-term list for scripts/automation/client_term_scan.py
+# Lives only in the private project directory. Never copy it into OSS-scope paths.
+# Formats: client: <name> | term: <literal> | re: <regex, ignore case> | cs: <regex, case sensitive>
+client: GE Vernova
+term: Vernova
+re: \bGEV\b
+term: Niskayuna
+term: Alpharetta
+re: \bHarbor\b
+cs: \bARC\b
+re: Quantum ?Black
+cs: \bQB\b
+term: DT4D
+term: NYISO
+term: ltionline
+# People, handles and employer/client abbreviations
+term: Rick Allen
+term: Nam Park
+term: Nathan Park
+term: Roy Greenman
+term: Chris Burke
+term: Jim Tallman
+re: \b(rallen|rallengrc|npark|rgreenman|cburke|thatsafact_ai)\b
+cs: \bLTI\b
+cs: \bGE\b
+cs: \bSDM\b
+re: \bge\.com\b

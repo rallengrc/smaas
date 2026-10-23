@@ -1,0 +1,673 @@
+<title>Burstable MLaaS Phase 1</title>
+<style>
+:root{
+  --ground:#f4f6f7;
+  --surface:#ffffff;
+  --surface-2:#eef1f3;
+  --ink:#141d24;
+  --ink-2:#44555f;
+  --ink-3:#6d7f89;
+  --rule:#d8dee2;
+  --rule-2:#e7ecef;
+  --accent:#0e5a72;
+  --accent-ink:#0a4356;
+  --accent-wash:#e2eef2;
+  --warn:#9a5a00;
+  --warn-wash:#f7ecdb;
+  --crit:#9a2f32;
+  --crit-wash:#f8e6e6;
+  --good:#2b6349;
+  --good-wash:#e2eee8;
+  --shadow:0 1px 2px rgba(20,29,36,.05), 0 8px 24px -16px rgba(20,29,36,.25);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#0e141a;
+    --surface:#151e26;
+    --surface-2:#1c2832;
+    --ink:#e2e9ee;
+    --ink-2:#a3b3bd;
+    --ink-3:#7b8b96;
+    --rule:#27343e;
+    --rule-2:#1f2a34;
+    --accent:#63b7d2;
+    --accent-ink:#8fcfe4;
+    --accent-wash:#14303c;
+    --warn:#d9a153;
+    --warn-wash:#33271518;
+    --crit:#e0888a;
+    --crit-wash:#34191a;
+    --good:#7bc0a0;
+    --good-wash:#162c24;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.8);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0e141a;
+  --surface:#151e26;
+  --surface-2:#1c2832;
+  --ink:#e2e9ee;
+  --ink-2:#a3b3bd;
+  --ink-3:#7b8b96;
+  --rule:#27343e;
+  --rule-2:#1f2a34;
+  --accent:#63b7d2;
+  --accent-ink:#8fcfe4;
+  --accent-wash:#14303c;
+  --warn:#d9a153;
+  --warn-wash:#2b2115;
+  --crit:#e0888a;
+  --crit-wash:#34191a;
+  --good:#7bc0a0;
+  --good-wash:#162c24;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.8);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--ground);
+  color:var(--ink);
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:17px;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1040px;margin:0 auto;padding:0 28px 96px}
+.prose{max-width:68ch}
+
+h1,h2,h3,h4,.ui{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+h1,h2,h3{text-wrap:balance;margin:0}
+a{color:var(--accent-ink)}
+
+.mono{font-family:ui-monospace,"Cascadia Mono",Consolas,monospace}
+.eyebrow{
+  font-family:ui-monospace,monospace;font-size:11px;font-weight:500;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);
+}
+
+/* ---------- masthead ---------- */
+header.mast{border-bottom:1px solid var(--rule);background:var(--surface)}
+.mast-inner{max-width:1040px;margin:0 auto;padding:48px 28px 36px;display:flex;flex-direction:column;gap:22px}
+.rule-tick{display:flex;align-items:center;gap:12px}
+.rule-tick::after{content:"";flex:1;height:1px;background:var(--rule)}
+h1{font-size:clamp(30px,4.6vw,46px);line-height:1.08;font-weight:600;letter-spacing:-.022em}
+h1 .sub{display:block;font-size:clamp(15px,1.8vw,19px);font-weight:400;color:var(--ink-2);letter-spacing:0;margin-top:12px;line-height:1.45}
+.meta{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(178px,1fr));
+  gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:3px;overflow:hidden;
+}
+.meta div{background:var(--surface);padding:13px 15px;display:flex;flex-direction:column;gap:5px}
+.meta dt{font-family:ui-monospace,monospace;font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3)}
+.meta dd{margin:0;font-family:-apple-system,"Segoe UI",sans-serif;font-size:14.5px;font-weight:500;line-height:1.4}
+
+/* ---------- sections ---------- */
+section{margin-top:64px;scroll-margin-top:20px}
+.sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:8px;flex-wrap:wrap}
+.sec-num{font-family:ui-monospace,monospace;font-size:12px;font-weight:600;color:var(--accent);letter-spacing:.08em}
+h2{font-size:clamp(21px,2.6vw,27px);font-weight:600;letter-spacing:-.015em}
+h3{font-size:17px;font-weight:600;margin-top:32px;letter-spacing:-.005em}
+p{margin:14px 0}
+.lede{font-size:18.5px;color:var(--ink-2);margin-top:14px}
+
+/* ---------- tables ---------- */
+.scroll{overflow-x:auto;margin:24px 0;border:1px solid var(--rule);border-radius:3px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-family:-apple-system,"Segoe UI",sans-serif;font-size:14px;font-variant-numeric:tabular-nums}
+th,td{text-align:left;padding:11px 15px;border-bottom:1px solid var(--rule-2);vertical-align:top;line-height:1.5}
+thead th{
+  font-family:ui-monospace,monospace;font-size:10.5px;font-weight:500;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--ink-3);background:var(--surface-2);border-bottom:1px solid var(--rule);white-space:nowrap;
+}
+tbody tr:last-child td{border-bottom:none}
+td strong{font-weight:600}
+.num{white-space:nowrap}
+
+/* ---------- chips ---------- */
+.chip{
+  display:inline-block;font-family:ui-monospace,monospace;font-size:11px;font-weight:600;
+  letter-spacing:.04em;padding:2px 7px;border-radius:3px;
+  background:var(--accent-wash);color:var(--accent-ink);white-space:nowrap;
+}
+.chip.ws{background:var(--surface-2);color:var(--ink-2)}
+.pill{
+  display:inline-block;font-family:-apple-system,"Segoe UI",sans-serif;font-size:11.5px;font-weight:600;
+  padding:2.5px 9px;border-radius:999px;white-space:nowrap;letter-spacing:.01em;
+}
+.pill.crit{background:var(--crit-wash);color:var(--crit)}
+.pill.warn{background:var(--warn-wash);color:var(--warn)}
+.pill.ok{background:var(--good-wash);color:var(--good)}
+
+/* ---------- callout ---------- */
+.callout{
+  border:1px solid var(--rule);border-left:3px solid var(--crit);
+  background:var(--surface);border-radius:3px;padding:22px 24px;margin:26px 0;box-shadow:var(--shadow);
+}
+.callout.note{border-left-color:var(--accent)}
+.callout > :first-child{margin-top:0}
+.callout > :last-child{margin-bottom:0}
+.callout h3{margin-top:0;font-size:16px}
+.callout .eyebrow{margin-bottom:9px}
+
+/* ---------- readings ---------- */
+.readings{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin:20px 0}
+.reading{background:var(--surface-2);border-radius:3px;padding:16px 18px;font-size:15px;line-height:1.6}
+.reading .eyebrow{display:block;margin-bottom:7px;color:var(--accent)}
+
+/* ---------- critical path ---------- */
+pre.path{
+  font-family:ui-monospace,monospace;font-size:12.5px;line-height:1.85;
+  background:var(--surface);border:1px solid var(--rule);border-radius:3px;
+  padding:20px 22px;overflow-x:auto;margin:24px 0;color:var(--ink-2);
+}
+pre.path b{color:var(--accent-ink);font-weight:600}
+pre.path i{color:var(--crit);font-style:normal;font-weight:600}
+
+/* ---------- workstream cards ---------- */
+.ws-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin-top:26px}
+.ws-card{
+  background:var(--surface);border:1px solid var(--rule);border-radius:3px;
+  padding:19px 21px;display:flex;flex-direction:column;gap:11px;box-shadow:var(--shadow);
+}
+.ws-card header{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap}
+.ws-card h3{margin:0;font-size:15.5px;flex:1;min-width:0}
+.ws-card ul{margin:0;padding-left:18px;font-size:14.5px;line-height:1.58;color:var(--ink-2);display:flex;flex-direction:column;gap:6px}
+.ws-card ul li::marker{color:var(--ink-3)}
+.exit{
+  font-family:-apple-system,"Segoe UI",sans-serif;font-size:13.5px;line-height:1.5;
+  border-top:1px solid var(--rule-2);padding-top:11px;margin-top:auto;color:var(--ink-2);
+}
+.exit b{font-family:ui-monospace,monospace;font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-3);display:block;margin-bottom:4px;font-weight:500}
+
+/* ---------- schedule ---------- */
+.sched{display:flex;flex-direction:column;margin-top:26px;border-left:2px solid var(--rule);padding-left:0}
+.wk{display:grid;grid-template-columns:118px 1fr;gap:20px;padding:16px 0 16px 22px;position:relative;border-bottom:1px solid var(--rule-2)}
+.wk:last-child{border-bottom:none}
+.wk::before{content:"";position:absolute;left:-5px;top:23px;width:8px;height:8px;border-radius:50%;background:var(--rule);border:2px solid var(--ground)}
+.wk.ms::before{background:var(--accent)}
+.wk-date{font-family:ui-monospace,monospace;font-size:12.5px;font-weight:600;color:var(--ink-2);padding-top:1px;white-space:nowrap}
+.wk-body{font-size:15px;line-height:1.55}
+.wk-body .ms-label{
+  font-family:-apple-system,"Segoe UI",sans-serif;font-weight:600;font-size:14px;color:var(--accent-ink);
+  display:block;margin-top:7px;
+}
+
+/* ---------- checklist ---------- */
+ul.dod{list-style:none;margin:24px 0;padding:0;display:flex;flex-direction:column;gap:2px;max-width:76ch}
+ul.dod li{
+  display:grid;grid-template-columns:auto 1fr;gap:13px;align-items:start;
+  padding:11px 14px;background:var(--surface);border:1px solid var(--rule-2);border-radius:3px;font-size:15px;line-height:1.5;
+}
+ul.dod li::before{
+  content:"";width:15px;height:15px;border:1.5px solid var(--rule);border-radius:2.5px;margin-top:4px;background:var(--ground);
+}
+
+/* ---------- asks ---------- */
+ol.asks{margin:24px 0;padding:0;list-style:none;counter-reset:ask;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:3px;overflow:hidden}
+ol.asks li{counter-increment:ask;background:var(--surface);padding:14px 16px;font-size:14.5px;line-height:1.5;display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:start}
+ol.asks li::before{
+  content:counter(ask,decimal-leading-zero);font-family:ui-monospace,monospace;font-size:11px;
+  font-weight:600;color:var(--accent);padding-top:3px;
+}
+ol.asks .who{display:block;font-family:-apple-system,"Segoe UI",sans-serif;font-size:12.5px;color:var(--ink-3);margin-top:3px}
+
+footer{margin-top:72px;padding-top:24px;border-top:1px solid var(--rule);font-family:-apple-system,"Segoe UI",sans-serif;font-size:13px;color:var(--ink-3);line-height:1.6}
+
+@media (max-width:640px){
+  body{font-size:16px}
+  .wk{grid-template-columns:1fr;gap:6px}
+  .meta{grid-template-columns:1fr 1fr}
+}
+</style>
+
+<header class="mast">
+  <div class="mast-inner">
+    <div class="rule-tick"><span class="eyebrow">LTI × GE Vernova ARC &nbsp;·&nbsp; Phase 1 of 2</span></div>
+    <h1>Burstable MLaaS: Design, Build &amp; Deploy
+      <span class="sub">Eight deliverables, eight and a half weeks, three engineers. The plan for standing up 24 GPUs on AWS at parity with Alpharetta — and proving it trains.</span>
+    </h1>
+    <dl class="meta">
+      <div><dt>Window</dt><dd>1 Oct – 30 Nov 2026</dd></div>
+      <div><dt>Kickoff</dt><dd>GE, Tue 6 Oct</dd></div>
+      <div><dt>Team</dt><dd>Park 100% · Burke 50% · Allen 50%</dd></div>
+      <div><dt>Capacity</dt><dd>~620 person-hours</dd></div>
+      <div><dt>Phase 2</dt><dd>Dec 2026 – Feb 2027</dd></div>
+      <div><dt>Hardware</dt><dd>3×24 or 4×32 — unresolved</dd></div>
+    </dl>
+  </div>
+</header>
+
+<div class="wrap">
+
+<section id="change">
+  <div class="sec-head"><span class="sec-num">01</span><h2>What the updated scope changed</h2></div>
+  <p class="prose lede">Re-baselined 4 October. Phase 1 moved to October–November and Phase 2 to December–February, which finally puts the kickoff at the <em>start</em> of the build rather than two-thirds of the way through it.</p>
+
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Phase</th><th>Previous</th><th>Current SOW</th></tr></thead>
+      <tbody>
+        <tr><td><strong>1 — Design, Build &amp; Deploy</strong></td><td>Sept – Oct 2026</td><td><strong>Oct – Nov 2026</strong></td></tr>
+        <tr><td><strong>2 — Support &amp; Enhance</strong></td><td>Nov – Dec 2026</td><td><strong>Dec 2026 – Feb 2027</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="prose">Deliverables are unchanged in both phases — only the calendar moved. Phase 2 also gained a third month, which means it now ends <strong>one month after the executed SOW's term end of 30 January 2027</strong>.</p>
+  <p class="prose lede">The scope changes below carried over from the earlier update and still stand.</p>
+
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Area</th><th>Prior project docs</th><th>Updated scope document</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Phase 1 window</strong></td><td>September 2026 only</td><td><strong>October – November 2026</strong></td></tr>
+        <tr><td><strong>Phase 1 deliverables</strong></td><td>Seven</td><td><strong>Eight</strong> — adds “design, build, and deploy the infrastructure required to support the Burstable MLaaS offering for ARC”</td></tr>
+        <tr><td><strong>Burstable build</strong></td><td>Phase 2 work, framed as “milestones toward an On-Demand MLaaS POC”</td><td><strong>Pulled into Phase 1</strong></td></tr>
+        <tr><td><strong>Phase 2</strong></td><td>On-Demand MLaaS POC build</td><td><strong>Support &amp; Enhance</strong> (Dec 2026 – Feb 2027) — troubleshoot, enhance per app-team requirements, support ongoing development</td></tr>
+        <tr><td><strong>Cyber wording</strong></td><td>“Implement required cybersecurity and authentication requirements”</td><td>“<strong>Configure the environment to meet applicable</strong> GE Vernova cybersecurity and authentication requirements”</td></tr>
+        <tr><td><strong>Engagement framing</strong></td><td>Burstable MLaaS specific</td><td>Broader <strong>Cloud Infrastructure Engineering services</strong>; deliverables explicitly “not intended to limit” other AWS work, naming <strong>Burstable HPC with THOR+</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="prose">
+    <h3>Two consequences worth naming up front</h3>
+    <p><strong>Phase 1 carries the whole build.</strong> Both the static environment and the burstable infrastructure. Phase 2 contains no build line items at all — so if the burstable infrastructure isn't built in Phase 1, the scope document has nowhere else to put it.</p>
+    <p><strong>The elastic-scope paragraph cuts both ways.</strong> It gives GE Vernova room to redirect the LTI team onto THOR+ or other AWS work mid-phase. Any such redirect consumes Phase 1 capacity that is already tight — track it explicitly rather than absorbing it silently.</p>
+  </div>
+</section>
+
+<section id="deliverables">
+  <div class="sec-head"><span class="sec-num">02</span><h2>The eight deliverables</h2></div>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>ID</th><th>Deliverable</th><th>Workstream</th><th>Depends on</th></tr></thead>
+      <tbody>
+        <tr><td><span class="chip">D1</span></td><td>Establish access to 3 static servers with 24 total GPUs in an agreed-upon AWS data center, for ~4 ARC researchers</td><td><span class="chip ws">WS2</span></td><td>Onboarding, landing zone, region &amp; instance decision, <strong>GPU quota</strong></td></tr>
+        <tr><td><span class="chip">D2</span></td><td>Enable file transfer between AWS and GE Vernova on-premises resources</td><td><span class="chip ws">WS4</span></td><td>Landing zone, <strong>GEV network/security approval</strong></td></tr>
+        <tr><td><span class="chip">D3</span></td><td>Provide basic command-line, shell, and script-based access</td><td><span class="chip ws">WS3</span></td><td>D1, auth model decision</td></tr>
+        <tr><td><span class="chip">D4</span></td><td>Configure servers with the technology stack aligned to the Alpharetta on-premises MLaaS environment</td><td><span class="chip ws">WS5</span></td><td><strong>Alpharetta stack inventory (GEV)</strong></td></tr>
+        <tr><td><span class="chip">D5</span></td><td>Configure the environment to meet applicable GE Vernova cybersecurity and authentication requirements</td><td><span class="chip ws">WS3</span></td><td><strong>GEV InfoSec requirements</strong>, IdP decision</td></tr>
+        <tr><td><span class="chip">D6</span></td><td>Install additional software and packages required for surrogate model training</td><td><span class="chip ws">WS5</span></td><td>D4, <strong>package &amp; license list (GEV)</strong></td></tr>
+        <tr><td><span class="chip">D7</span></td><td>Demonstrate surrogate model training equivalent to on-prem MLaaS, across multiple GPUs</td><td><span class="chip ws">WS6</span></td><td>D1, D4, D6, <strong>agreed benchmark &amp; baseline (GEV)</strong></td></tr>
+        <tr><td><span class="chip">D8</span></td><td>Design, build, and deploy the infrastructure required to support the Burstable MLaaS offering for ARC</td><td><span class="chip ws">WS1</span> <span class="chip ws">WS7</span></td><td><strong>Scope confirmation</strong> — see below</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="blockers">
+  <div class="sec-head"><span class="sec-num">03</span><h2>Critical path and blockers</h2></div>
+
+  <div class="callout">
+    <div class="eyebrow">Blocker · highest priority</div>
+    <h3>D8's scope is ambiguous, and the gap is two to three weeks of work</h3>
+    <p>“The infrastructure required to support the Burstable MLaaS offering” admits two readings:</p>
+    <div class="readings">
+      <div class="reading">
+        <span class="eyebrow">Reading A · narrow · ~1–1.5 weeks</span>
+        The supporting AWS foundation around the static servers — account and landing zone, VPC, IAM, storage, transfer path, access tier, logging — all under Terraform. Largely implied by D1–D7 anyway.
+      </div>
+      <div class="reading">
+        <span class="eyebrow">Reading B · broad · 3–4 weeks</span>
+        The <em>elastic</em> compute layer that makes the offering “Burstable” — on-demand GPU capacity beyond the fixed three servers, with cost guardrails. This is what Phase 2 previously held.
+      </div>
+    </div>
+    <p>Because the updated Phase 2 contains no build work, <strong>Reading B is the more likely intent</strong> — and it is the difference between a comfortable Phase 1 and an over-committed one.</p>
+    <p><strong>Recommended position, pending confirmation:</strong> commit to Reading A as the baseline, plus a <strong>time-boxed Reading B foundation</strong> — a burst-capable design decision record and one working burst proof point on the same landing zone. Explicitly exclude the app tier, multi-tenancy, platform services, and CI/CD; those remain Work Scope Amendment territory.</p>
+    <p><strong>Action:</strong> confirm D8 scope with Michael Russo at the GE kickoff on 6 October.</p>
+    <p><strong>Helpful development:</strong> GE Vernova has CloudFormation templates and YAML available, <strong>including Karpenter scaling configuration</strong> — exactly the mechanism WS7 proposes for the burst layer. A working reference config materially de-risks Reading B. Get these files at or before the kickoff, then reassess the 3–4 week estimate.</p>
+  </div>
+
+  <div class="callout">
+    <div class="eyebrow">Blocker · new</div>
+    <h3>The application / infrastructure / support boundary has shifted</h3>
+    <p>Earlier analysis placed the Java Spring and React application tier <em>outside</em> LTI's scope, on the strength of the August role split: Jim Tallman's team owns the application, LTI owns infrastructure.</p>
+    <p>The internal kickoff brief says something different — LTI will "work with Jim Tallman and his engineering team to <strong>deploy their application and frontend into the new environment, then support it</strong>."</p>
+    <p>Deploying and supporting an application someone else builds is not the same as building it, but it is more than a pure-infrastructure boundary, and it carries real work: container images, manifests, CI/CD into the cluster, runtime troubleshooting, and an on-call expectation running through all three months of Phase 2.</p>
+    <p><strong>Action:</strong> the kickoff brief itself says to confirm the division of application, infrastructure and support responsibilities at kickoff. Do that on 6 October and write the answer down. No application deployment materials have been provided yet — only infrastructure templates.</p>
+  </div>
+
+  <div class="callout">
+    <div class="eyebrow">Blocker · highest priority</div>
+    <h3>The hardware spec and the funding are both unsettled</h3>
+    <p>The Electrification business case Mike Russo shared at the kickoff states the funded footprint as
+    <strong>4 × p5.48xlarge — 32 H100 GPUs</strong>. SOW deliverable D1 says <strong>3 static servers with 24 total GPUs</strong>.</p>
+    <p>This is not a rounding difference. It changes the service-quota request, the capacity reservation, the cost basis,
+    the landing-zone sizing, and how the D7 multi-GPU demo is designed. <strong>Nothing should be requested from AWS
+    until it is settled.</strong></p>
+    <p>Compounding it: the deck lists <strong>“Secure funding from business for GPU Servers” as an open next step</strong>.
+    The money is Electrification 2026 program money and it is not yet committed — which makes funding a predecessor to
+    the phase’s first milestone.</p>
+    <p><strong>Action:</strong> confirm the server count and the funding status with Mike Russo this week. These two
+    together now outrank the D8 scope question.</p>
+  </div>
+
+  <h3>The critical path</h3>
+  <pre class="path">Onboarding <span>(VNDLY, SSO, AWS access)</span>
+  └─&gt; <b>WS1</b> landing zone <span>(account, region, VPC, IAM, Terraform)</span>
+        ├─&gt; GPU quota / capacity reservation   <i>&lt;- LONG LEAD, start now</i>
+        │     └─&gt; <b>D1</b> servers up
+        │           └─&gt; <b>D4</b> stack parity ─&gt; <b>D6</b> packages ─&gt; <b>D7</b> training demo   <i>&lt;- acceptance proof</i>
+        ├─&gt; <b>D2</b> file transfer      <span>(parallel — own GEV approval track)</span>
+        ├─&gt; <b>D3</b>/<b>D5</b> access + cyber  <span>(parallel)</span>
+        └─&gt; <b>D8</b> burst layer        <span>(once landing zone is stable)</span></pre>
+
+  <p class="prose">Three items gate everything, and all three sit outside LTI's direct control.</p>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Gate</th><th>Why it's critical</th><th>Lead time</th><th>Owner</th></tr></thead>
+      <tbody>
+        <tr><td><strong>VNDLY onboarding + SSO</strong></td><td>Background checks and drug tests are required before any LTI engineer gets GE environment access. No access, no build. <strong>Chris Burke joined 14 September and Rick Allen 4 October</strong> — verify both are through rather than assuming.</td><td class="num">Days–weeks</td><td>Michael Russo / GEV</td></tr>
+        <tr><td><strong>GPU quota + capacity</strong></td><td>8-GPU instance families routinely require quota increases <em>and</em> capacity reservations. Capacity in a given AZ is not guaranteed.</td><td class="num">Days–weeks</td><td>LTI requests, AWS grants</td></tr>
+        <tr><td><strong>Alpharetta stack inventory</strong></td><td>D4, D6 and D7 are all undefined without it — “align with Alpharetta” is untestable without knowing what Alpharetta runs.</td><td class="num">GEV-dependent</td><td>Jim Tallman's team (GEV)</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="callout note">
+    <p style="margin:0">All three should be formally requested at or immediately after the GE kickoff on 6 October. <strong>If any is not moving by Friday 16 October, the 30 November date is at risk</strong> — and it should be raised in that week's status update, not at the end of the phase.</p>
+  </div>
+</section>
+
+<section id="workstreams">
+  <div class="sec-head"><span class="sec-num">04</span><h2>Workstreams</h2></div>
+  <p class="prose lede">Nine workstreams, each with an exit condition that can be demonstrated rather than asserted.</p>
+
+  <div class="ws-grid">
+
+    <article class="ws-card">
+      <header><span class="chip ws">WS0</span><h3>Access &amp; onboarding</h3></header>
+      <ul>
+        <li>Confirm VNDLY records, background checks and drug tests complete for <strong>all three</strong> of Nam, Chris and Rick — Chris joined 14 September and Rick 4 October, so verify rather than assume</li>
+        <li>Handover from Earle Flynn: AWS and account context, in-flight work, and the DT4D/Quantum Black documentation review he carried</li>
+        <li><strong>AERO badges for Nam and Rick</strong> to work on-site at 1RC, part-time — a separate requirement from
+        VNDLY, with its own sponsor and lead time</li>
+        <li><strong>ServiceNow “Business App” record</strong> — confirm who raises it and whether it gates account provisioning</li>
+        <li><strong>GWD via the CTO/HQ “Base” process</strong> — a formal architecture review with CTO/HQ’s Solution
+        Architecture team. An MVP design for Jim Tallman must pass through it</li>
+        <li><strong>Git pipelines for IaC</strong> must be set up with CTO/HQ SA/ENG — our Terraform delivery path depends
+        on another team’s schedule</li>
+        <li>Obtain GE Vernova SSO credentials and VPN/network access</li>
+        <li>AWS account path is <strong>partly answered</strong>: a dedicated account for this application only, standalone, with no integration with the GE Vernova Enterprise Master Payer account that hosts the existing environment. Still confirm what IAM permissions LTI actually holds</li>
+      </ul>
+      <p class="exit"><b>Exit</b>All three engineers authenticate to the target AWS account and run <span class="mono">aws sts get-caller-identity</span>.</p>
+    </article>
+
+    <article class="ws-card">
+      <header><span class="chip ws">WS1</span><h3>Landing zone &amp; network</h3><span class="chip">D8</span></header>
+      <ul>
+        <li><strong>Account placement is settled:</strong> a dedicated account for this application, <strong>inside the GEV ENT MasterPayer Org</strong>, with QB-equivalent security and compliance controls. Design the landing zone as an Org member account inheriting central guardrails, not as an isolated account</li>
+        <li>Confirm the region — still unresolved. <span class="mono">eu-west-1</span> appears in the Quantum Black reference but may be specific to the wind business's data residency, not ARC's requirement</li>
+        <li>VPC design: private subnets for GPU nodes, NAT egress, security groups, NACLs</li>
+        <li>On-prem connectivity: Direct Connect vs. Site-to-Site VPN vs. existing GEV transit — decided alongside D2</li>
+        <li>IAM roles with permission boundaries; no long-lived keys. VPC endpoints for S3, ECR, STS, SSM</li>
+        <li>CloudWatch, CloudTrail and AWS Config baseline</li>
+        <li><strong>Terraform from day one</strong> — Phase 2 is “support &amp; enhance,” which is materially harder against click-ops infrastructure</li>
+      </ul>
+      <p class="exit"><b>Exit</b><span class="mono">terraform apply</span> from a clean state produces the full network, IAM and logging baseline.</p>
+    </article>
+
+    <article class="ws-card">
+      <header><span class="chip ws">WS2</span><h3>Static GPU compute</h3><span class="chip">D1</span></header>
+      <ul>
+        <li>24 GPUs across 3 servers means 8 per server — see the instance options below</li>
+        <li><strong>Request service quota increases immediately</strong>; evaluate On-Demand Capacity Reservations or ML Capacity Blocks if standard capacity is short</li>
+        <li>Provision via Terraform; attach EBS plus shared storage (FSx for Lustre or EFS)</li>
+        <li><strong>Agree a cost guardrail before servers run continuously:</strong> monthly budget, AWS Budgets alerts, and a scheduled or idle-triggered stop/start policy</li>
+      </ul>
+      <p class="exit"><b>Exit</b>Three instances running, 24 GPUs visible via <span class="mono">nvidia-smi</span>, reachable by four named researchers.</p>
+    </article>
+
+    <article class="ws-card">
+      <header><span class="chip ws">WS3</span><h3>Access &amp; authentication</h3><span class="chip">D3</span><span class="chip">D5</span></header>
+      <ul>
+        <li><strong>Obtain the actual cybersecurity requirements document.</strong> D5 says “applicable” without naming a standard, and LTI cannot self-certify against an unstated one — request the controlling policy and a named GEV approver</li>
+        <li>Auth model: SSM Session Manager (no open SSH ports, fully audit-logged — the recommended default) vs. bastion SSH vs. direct SSH over VPN</li>
+        <li>Federate through GE Vernova's corporate IdP where possible — <strong>the IdP is still unidentified</strong> and it blocks work here and in D8</li>
+        <li>Per-researcher accounts, sudo policy, session logging, MFA, KMS encryption at rest and in transit, AMI patch baseline</li>
+      </ul>
+      <p class="exit"><b>Exit</b>All four researchers authenticate under their own identity, run shell and script workloads, and every session is logged — confirmed by a named GEV security contact.</p>
+    </article>
+
+    <article class="ws-card">
+      <header><span class="chip ws">WS4</span><h3>File transfer, on-prem ↔ AWS</h3><span class="chip">D2</span></header>
+      <ul>
+        <li>Decide against real numbers — <strong>ask Jim Tallman's team for dataset size and transfer frequency first</strong></li>
+        <li><strong>DataSync</strong> over Direct Connect/VPN for scheduled bulk transfer; <strong>Transfer Family</strong> if researchers expect SFTP; <strong>S3 + CLI</strong> for ad-hoc movement; <strong>Storage Gateway/FSx</strong> if on-prem needs a live mounted view</li>
+        <li>Pair with in-cloud shared storage so all three nodes see the same data — FSx for Lustre for training I/O, or EFS for simplicity</li>
+        <li>Open the GEV network/InfoSec review in kickoff week — this is likely the slowest external approval in the phase</li>
+      </ul>
+      <p class="exit"><b>Exit</b>A researcher moves a real dataset in both directions and it lands intact, through an approved path.</p>
+    </article>
+
+    <article class="ws-card">
+      <header><span class="chip ws">WS5</span><h3>Stack parity &amp; training packages</h3><span class="chip">D4</span><span class="chip">D6</span></header>
+      <ul>
+        <li><strong>Request the Alpharetta inventory:</strong> OS and version, NVIDIA driver, CUDA/cuDNN, ML frameworks, MPI/NCCL, Python package manifest, Ansys CFX and other licensed software, scheduler config, filesystem layout</li>
+        <li>Build a golden AMI (Packer) or documented bootstrap — reproducible, not hand-installed, because Phase 2 is support</li>
+        <li><strong>Resolve licensing:</strong> who holds Ansys CFX, and do the terms permit cloud execution? A license server needing on-prem reachability folds back into WS4</li>
+        <li>Validate multi-GPU plumbing — NCCL all-reduce across 8 GPUs on one node, and across nodes if multi-node training is expected</li>
+      </ul>
+      <p class="exit"><b>Exit</b>A documented, reproducible stack whose versions Jim Tallman's team confirms as matching Alpharetta.</p>
+    </article>
+
+    <article class="ws-card">
+      <header><span class="chip ws">WS6</span><h3>Training validation</h3><span class="chip">D7</span><span class="pill crit">Acceptance proof</span></header>
+      <ul>
+        <li><strong>Agree the benchmark before building toward it.</strong> “Equivalent to the on-premises environment” needs a specific model, a specific dataset, an on-prem baseline for both accuracy and wall-clock runtime, and an agreed tolerance</li>
+        <li>Run single-GPU, then 8 GPUs on one node, then multi-node if in scope</li>
+        <li>Document deltas against the baseline and their causes — GPU generation, framework version, data path</li>
+      </ul>
+      <p class="exit"><b>Exit</b>A written validation report, accepted by GE Vernova, showing equivalent training across multiple GPUs. This is the deliverable that demonstrates Phase 1 succeeded.</p>
+    </article>
+
+    <article class="ws-card">
+      <header><span class="chip ws">WS7</span><h3>Burstable MLaaS infrastructure</h3><span class="chip">D8</span><span class="pill warn">Scope pending</span></header>
+      <ul>
+        <li>Decision record for the burst mechanism: EKS + Karpenter GPU node pool vs. an EC2 Auto Scaling Group vs. AWS Batch or ParallelCluster — recommend the simplest option that satisfies the real trigger</li>
+        <li><strong>Define the burst trigger.</strong> With scheduling software excluded from Phase 1, the honest near-term answer is likely researcher-initiated self-service rather than queue-depth autoscaling. Confirm rather than assume</li>
+        <li>Cost controls as a build requirement, not a follow-up: node caps, idle termination, Spot where interruption is tolerable, budget alarms</li>
+        <li><strong>Out of scope absent an amendment:</strong> the application tier, multi-tenancy, platform services,
+        application CI/CD</li>
+        <li><strong>The application target has changed.</strong> The Electrification plan shows <strong>FastAPI, Flyte,
+        Dask, MLflow and Streamlit</strong> — a Python stack — not the Java Spring/React every earlier document assumed,
+        and Dask rather than Ray. Confirm before sizing any platform work</li>
+      </ul>
+      <p class="exit"><b>Exit</b>Decision record accepted, burst mechanism deployed via Terraform, one demonstrated scale-up and scale-down cycle with cost guardrails active.</p>
+    </article>
+
+    <article class="ws-card">
+      <header><span class="chip ws">WS8</span><h3>Documentation &amp; Phase 2 readiness</h3></header>
+      <ul>
+        <li>Researcher quick-start: connect, move data, run training, request burst capacity</li>
+        <li>Operator runbook: build and rebuild, patch, common failures, escalation — Phase 2 will be run against this document</li>
+        <li>As-built architecture diagram, Terraform repo README, Phase 1 closeout summary</li>
+      </ul>
+      <p class="exit"><b>Exit</b>A second engineer could operate the environment from the documentation alone.</p>
+    </article>
+
+  </div>
+
+  <h3>Instance selection: 8 GPUs per server</h3>
+  <p class="prose"><strong>Effectively decided: <span class="mono">p5.48xlarge</span> (8 × H100 80GB)</strong> — named in the Electrification plan, with AWS capacity discussions for P5 already underway.</p>
+  <p class="prose">But the criterion that matters for D7 is <strong>Alpharetta parity, not raw performance</strong>. D7 asks for <em>equivalent</em> training, and H100 is several generations newer than typical on-prem hardware — a generation mismatch changes numerics, driver and framework requirements, and achievable batch sizes. Confirm Alpharetta’s GPU model and decide explicitly how “equivalent” is judged against newer silicon.</p>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Instance</th><th>GPUs</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td class="mono">p3.16xlarge</td><td class="num">8 × V100 16 GB</td><td>Oldest; closest match if Alpharetta is V100-era</td></tr>
+        <tr><td class="mono">p4d.24xlarge</td><td class="num">8 × A100 40 GB</td><td>NVLink + EFA; common ML training baseline</td></tr>
+        <tr><td class="mono">p4de.24xlarge</td><td class="num">8 × A100 80 GB</td><td>Larger HBM for bigger models</td></tr>
+        <tr><td class="mono">p5.48xlarge</td><td class="num">8 × H100 80 GB</td><td>Highest performance; tightest capacity</td></tr>
+        <tr><td class="mono">g5.48xlarge</td><td class="num">8 × A10G 24 GB</td><td>Cheaper; no NVLink — weaker for multi-GPU training</td></tr>
+        <tr><td class="mono">g6e.48xlarge</td><td class="num">8 × L40S 48 GB</td><td>Cost/performance middle ground</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h3>Cost — now quantified</h3>
+  <p class="prose">The Electrification plan prices <strong>4 × p5.48xlarge</strong> with a 24% GE Vernova customer discount:</p>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Option</th><th>Structure</th><th class="num">Total</th></tr></thead>
+      <tbody>
+        <tr><td><strong>1</strong></td><td>On-demand for 15 months, billed quarterly</td><td class="num">$1,832,171.52</td></tr>
+        <tr><td><strong>2</strong></td><td>12-month all-up-front, then 3 months on-demand</td><td class="num">$1,228,287.79</td></tr>
+        <tr><td></td><td><strong>Option 2 saving</strong></td><td class="num"><strong>$603,883.73</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="prose">That is <strong>~$122,145 per month on-demand</strong> for all four servers ($30,536.19 per server),
+  or roughly <strong>$71,821 per month equivalent</strong> if prepaid for twelve.</p>
+  <p class="prose"><strong>Two consequences.</strong> This is an order of magnitude above the “tens of thousands per month”
+  this plan previously assumed — the earlier figure was for three servers of unspecified family, against four of the most
+  expensive one. And <strong>a 12-month prepay removes the stop/start lever</strong>: if the business takes Option 2,
+  idle-shutdown saves nothing on committed servers and the cost argument for building it disappears. Find out which option
+  was chosen before designing a scheduling policy.</p>
+  <p class="prose">The <strong>15-month costing horizon</strong> is itself a signal — the SOW runs five months, to February
+  2027, but the hardware is costed to roughly January 2028.</p>
+</section>
+
+<section id="schedule">
+  <div class="sec-head"><span class="sec-num">05</span><h2>Schedule</h2></div>
+  <p class="prose lede">Eight working weeks plus a final Monday, starting at the kickoff. Long-lead items go out in week one; the D7 demo is not compressed against the deadline.</p>
+
+  <div class="sched">
+    <div class="wk ms">
+      <div class="wk-date">Oct 5–9</div>
+      <div class="wk-body"><strong>Internal kickoff Mon 10/5, GE kickoff Tue 10/6.</strong> Confirm the application/infrastructure/support split. Obtain the CloudFormation, YAML and Karpenter reference configs. File every long-lead request: GPU quota, Alpharetta inventory, cyber requirements, network and transfer approval.
+        <span class="ms-label">M0 — kickoffs held; every external dependency formally requested</span></div>
+    </div>
+    <div class="wk">
+      <div class="wk-date">Oct 12–16</div>
+      <div class="wk-body">Onboarding closed out. Landing zone built in Terraform. Region and instance family locked. Transfer mechanism decided.
+        <span class="ms-label">Landing zone applied; region + instance type locked</span></div>
+    </div>
+    <div class="wk ms">
+      <div class="wk-date">Oct 19–23</div>
+      <div class="wk-body">Provision the three GPU servers. Stand up the access model.
+        <span class="ms-label">M1 — D1 + D3: 24 GPUs reachable by researchers</span></div>
+    </div>
+    <div class="wk ms">
+      <div class="wk-date">Oct 26–30</div>
+      <div class="wk-body">Bring the transfer path live. Begin building the stack to Alpharetta parity.
+        <span class="ms-label">M2 — D2: data moves both directions</span></div>
+    </div>
+    <div class="wk ms">
+      <div class="wk-date">Nov 2–6</div>
+      <div class="wk-body">Stack parity complete. Training packages installed and licensed.
+        <span class="ms-label">M3 — D4 + D6: stack matches, packages in</span></div>
+    </div>
+    <div class="wk ms">
+      <div class="wk-date">Nov 9–13</div>
+      <div class="wk-body">Cyber configuration reviewed and signed off with GEV. Burst build starts.
+        <span class="ms-label">M4 — D5: security-approved</span></div>
+    </div>
+    <div class="wk ms">
+      <div class="wk-date">Nov 16–20</div>
+      <div class="wk-body">Training validation runs. Burst build continues.
+        <span class="ms-label">M5 — D7: multi-GPU training demo accepted</span></div>
+    </div>
+    <div class="wk ms">
+      <div class="wk-date">Nov 23–27</div>
+      <div class="wk-body">Burst demo and documentation — <strong>short week, US Thanksgiving 11/26–27</strong>.
+        <span class="ms-label">M6 — D8: burst mechanism demonstrated</span></div>
+    </div>
+    <div class="wk ms">
+      <div class="wk-date">Nov 30</div>
+      <div class="wk-body">Phase 1 closeout and handover to Phase 2.
+        <span class="ms-label">Phase 1 complete</span></div>
+    </div>
+  </div>
+
+  <div class="callout note">
+    <p><strong>The re-baseline bought real float.</strong> The previous window left 6.5 weeks for eight deliverables with the kickoff two-thirds of the way through; this one gives 8.5 weeks starting <em>at</em> the kickoff, with roughly a week of slack before D7 and another before closeout.</p>
+    <p style="margin:0">Two things still want watching. <strong>Thanksgiving falls in the D8 demo week</strong>, so pull that work forward if WS7 starts clean. And <strong>three part-to-full-time allocations</strong> mean parallel workstreams compete for Nam's attention more than a two-full-timer plan would — give Chris the architecture-heavy tracks where his front-loaded hours land, and Rick the tracks that tolerate interruption.</p>
+  </div>
+</section>
+
+<section id="dod">
+  <div class="sec-head"><span class="sec-num">06</span><h2>Definition of done</h2></div>
+  <p class="prose lede">Phase 1 is complete when all of the following are true and evidenced.</p>
+  <ul class="dod">
+    <li><div>Three servers, 24 GPUs, running in the agreed region, reachable by four named ARC researchers <span class="chip">D1</span></div></li>
+    <li><div>A working, security-approved file transfer path exercised in both directions with real data <span class="chip">D2</span></div></li>
+    <li><div>CLI, shell and script access for every researcher under their own identity, with session logging <span class="chip">D3</span></div></li>
+    <li><div>Software stack confirmed by GE Vernova as matching Alpharetta <span class="chip">D4</span></div></li>
+    <li><div>Configuration confirmed against the named GE Vernova cybersecurity requirements by a named approver <span class="chip">D5</span></div></li>
+    <li><div>Surrogate-model training packages installed and licensed <span class="chip">D6</span></div></li>
+    <li><div><strong>Accepted validation report</strong> showing equivalent multi-GPU training against the on-prem baseline <span class="chip">D7</span></div></li>
+    <li><div>Burstable MLaaS infrastructure designed, deployed via IaC, and demonstrated, per the confirmed scope <span class="chip">D8</span></div></li>
+    <li><div>Runbook and researcher guide published; Terraform repository handed over <span class="chip ws">WS8</span></div></li>
+    <li><div>Cost guardrails active, with an agreed monthly budget and stop/start policy</div></li>
+  </ul>
+</section>
+
+<section id="risks">
+  <div class="sec-head"><span class="sec-num">07</span><h2>Risks</h2></div>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Risk</th><th>Impact</th><th>Mitigation</th><th>Severity</th></tr></thead>
+      <tbody>
+        <tr><td><strong>D8 scope ambiguity</strong> — the two readings differ by two to three weeks of work</td><td>Over- or under-delivery on the phase's largest unknown</td><td>Confirm at the GE kickoff, 6 October; the available Karpenter reference config may shrink the estimate</td><td><span class="pill crit">Critical</span></td></tr>
+        <tr><td><strong>Hardware spec conflict</strong> — SOW D1 says 3 servers / 24 GPUs; the funded plan says 4 × p5.48xlarge / 32 H100 GPUs</td><td>Wrong quota requests, wrong capacity reservations, wrong cost basis, and a D7 demo designed against the wrong footprint</td><td>Settle with Mike Russo before any AWS request goes in</td><td><span class="pill crit">Critical</span></td></tr>
+        <tr><td><strong>GPU funding not yet secured</strong> — listed as an open next step in the Electrification plan</td><td>Blocks D1 outright; servers cannot be landed without budget approval</td><td>Track as a D1 predecessor; the source is Electrification 2026 program money</td><td><span class="pill crit">Critical</span></td></tr>
+        <tr><td><strong>New external gates</strong> — GWD via the CTO/HQ “Base” process, a ServiceNow Business App record, CTO/HQ-provisioned Git pipelines, and AERO badges for 1RC site access</td><td>Four more lead-time dependencies owned outside ARC; the MVP design must pass GWD</td><td>Request all four in week 1; AERO badging sits on top of VNDLY</td><td><span class="pill warn">High</span></td></tr>
+        <tr><td><strong>Application stack contradiction</strong> — Java Spring in prior documents, FastAPI / Flyte / Dask / MLflow in the Electrification target</td><td>Mis-sized estimate for “deploy and support their application”; the EKS plan specifies Ray, not Dask</td><td>Confirm the real target stack with Jim Tallman at the business intake call</td><td><span class="pill warn">High</span></td></tr>
+        <tr><td><strong>GPU quota or capacity unavailable</strong> in the chosen region</td><td>Blocks D1, and therefore D4, D6 and D7</td><td>Request quota in kickoff week; identify a fallback family and region; evaluate Capacity Reservations</td><td><span class="pill crit">Critical</span></td></tr>
+        <tr><td><strong>Onboarding delay</strong> (VNDLY, SSO)</td><td>Blocks all build work; consumes float directly</td><td>Escalate to Michael Russo in kickoff week; confirm status rather than assuming</td><td><span class="pill crit">Critical</span></td></tr>
+        <tr><td><strong>Team is three part-to-full-time people, not two full-timers</strong> — Park 100%, Burke 50% (joined 14 Sep), Allen 50% (joined 4 Oct, may increase)</td><td>Same 2.0 FTE on paper, but more coordination overhead, two recent joiners, and only one person able to hold a continuous critical path</td><td>Nam on the access-dependent path; Chris on architecture-heavy tracks while his hours are front-loaded; Rick on interruption-tolerant tracks. Verify VNDLY for Chris and Rick. Confirm whether Exhibit A needs updating</td><td><span class="pill warn">High</span></td></tr>
+        <tr><td><strong>Alpharetta inventory not supplied</strong></td><td>D4, D6 and D7 are undefined and unverifiable</td><td>Request at the kickoff; if unanswered by 23 Oct, build to a documented assumed stack and flag it in status</td><td><span class="pill crit">Critical</span></td></tr>
+        <tr><td><strong>“Equivalent training” has no agreed baseline</strong></td><td>D7 cannot be objectively accepted</td><td>Agree model, dataset, baseline metrics and tolerance with Jim Tallman's team before 16 Nov</td><td><span class="pill crit">Critical</span></td></tr>
+        <tr><td><strong>Cyber requirements unstated</strong></td><td>D5 unverifiable; late-surfacing controls force rework</td><td>Obtain the controlling standard and a named approver; schedule the review for the week of 9 November, not the final week</td><td><span class="pill warn">High</span></td></tr>
+        <tr><td><strong>GPU cost overrun</strong></td><td>~$1.23M–$1.83M over 15 months; the prepay-vs-on-demand decision alone is worth $604k</td><td>Now quantified at ~$122k/month on-demand, $1.23M–$1.83M over 15 months. Agree a budget ceiling and alerts; note a 12-month prepay removes the stop/start lever entirely</td><td><span class="pill crit">Critical</span></td></tr>
+        <tr><td><strong>Ansys CFX licensing blocks cloud execution</strong></td><td>D6 and D7 blocked late in the phase</td><td>Confirm license holder and cloud terms at the kickoff; check whether a license server needs on-prem reachability</td><td><span class="pill warn">High</span></td></tr>
+        <tr><td><strong>Scope diversion</strong> to THOR+ or other AWS work</td><td>Directly consumes Phase 1 capacity</td><td>The scope document permits it; track diverted hours and restate Phase 1 impact when it happens</td><td><span class="pill warn">High</span></td></tr>
+        <tr><td><strong>Timeline</strong> — 8.5 weeks, 8 deliverables, ~2.0 FTE, 3 external gates, Thanksgiving in the D8 demo week</td><td>Phase 1 slips into Phase 2’s support window</td><td>Weekly status against the milestones; escalate at an M1 or M2 miss; pull D8 work forward out of Thanksgiving week if WS7 starts clean</td><td><span class="pill ok">Eased</span></td></tr>
+        <tr><td><strong>Phase 2 extends past the signed term</strong> — Phase 2 now ends February 2027; the executed SOW term ends 30 January 2027</td><td>The final month of committed support sits outside the contract</td><td>Confirm the actual term end at the GE kickoff; if it is still January, get an extension or follow-on SOW signed during January rather than discovering the gap in February</td><td><span class="pill crit">Critical</span></td></tr>
+        <tr><td><strong>Application support boundary</strong> — the kickoff brief has LTI deploying <em>and supporting</em> Jim Tallman’s application and frontend</td><td>Unplanned Phase 1 work and an on-call expectation across all three months of Phase 2</td><td>Confirm and document the split at the GE kickoff, as the kickoff brief itself instructs</td><td><span class="pill crit">Critical</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="asks">
+  <div class="sec-head"><span class="sec-num">08</span><h2>What LTI needs from GE Vernova</h2></div>
+  <p class="prose lede">The first fourteen went to the 6 October kickoff; the last six come out of the Electrification business case shared there.</p>
+  <ol class="asks">
+    <li><div>Application / infrastructure / support split, confirmed and written down <span class="who">Michael Russo, Jim Tallman</span></div></li>
+    <li><div>The CloudFormation templates, YAML and Karpenter scaling configuration <span class="who">Michael Russo</span></div></li>
+    <li><div>D8 scope confirmation <span class="who">Michael Russo</span></div></li>
+    <li><div>Alpharetta MLaaS environment inventory <span class="who">Jim Tallman's team</span></div></li>
+    <li><div>Cybersecurity requirements document and named approver <span class="who">GEV InfoSec</span></div></li>
+    <li><div>Corporate IdP identity and federation path <span class="who">GEV IT</span></div></li>
+    <li><div>AWS region decision and LTI's permission level in the dedicated account <span class="who">GEV cloud team</span></div></li>
+    <li><div>Training benchmark: model, dataset, baseline metrics, tolerance <span class="who">Jim Tallman's team</span></div></li>
+    <li><div>Dataset size and transfer frequency <span class="who">Jim Tallman's team</span></div></li>
+    <li><div>Ansys CFX license holder and cloud-execution terms <span class="who">GEV</span></div></li>
+    <li><div>The four named researchers and their access requirements <span class="who">ARC</span></div></li>
+    <li><div>Monthly GPU budget and stop/start policy approval <span class="who">Michael Russo</span></div></li>
+    <li><div>VNDLY onboarding status for Nam, Chris and Rick <span class="who">Michael Russo</span></div></li>
+    <li><div>Term coverage for February 2027 <span class="who">Michael Russo</span></div></li>
+    <li><div>Server count: 3 and 24, or 4 and 32? <span class="who">Michael Russo</span></div></li>
+    <li><div>GPU funding status — is Electrification’s 2026 program money committed? <span class="who">Michael Russo</span></div></li>
+    <li><div>Which costing option — 15-month on-demand, or 12-month prepay? <span class="who">Michael Russo</span></div></li>
+    <li><div>GWD “Base” process requirements and timing for the MVP design <span class="who">CTO/HQ Solution Architecture</span></div></li>
+    <li><div>AERO badge sponsorship for Nam and Rick at 1RC <span class="who">Michael Russo, Todd Shirback</span></div></li>
+    <li><div>Confirmed application stack — FastAPI/Flyte/Dask or Java Spring/React? <span class="who">Jim Tallman</span></div></li>
+  </ol>
+</section>
+
+<section id="discrepancy">
+  <div class="sec-head"><span class="sec-num">09</span><h2>Contract discrepancies to resolve</h2></div>
+  <div class="prose">
+    <p><strong>Phase 2 now runs past the signed term.</strong> The SOW scope puts Phase 2 at December 2026 – February 2027. The executed SOW, effective 12 August 2026, has a term ending <strong>30 January 2027</strong>. February is committed support falling outside the contract. The internal kickoff brief describes “the current contract period, which runs through February,” suggesting the term has moved and the project record is simply behind — <strong>confirm the actual term end</strong>, and if it is still January, get an extension signed during January rather than discovering the gap in February.</p>
+    <p><strong>Which document governs the deliverables.</strong> <span class="mono">SOW - Scope.pdf</span> is a scope document, not the executed contract, and the executed SOW describes the phases differently.</p>
+    <p>If the scope document is intended to change the contractual deliverables, it should be executed as a Work Scope Amendment under the SOW’s Out of Scope Work process — written proposal, 14-day response, signed amendment. This plan proceeds on the scope document as directed, with that flagged.</p>
+    <p><strong>Exhibit A names two resources; the team is three.</strong> Exhibit A lists two Sr. Cloud Infrastructure Engineers at 40 hrs/week. Delivery is staffed 100/50/50 across Nam Park, Chris Burke and Rick Allen — and Chris replaced Earle Flynn, who is the name in the signed document. Same nominal capacity, different structure and different people. Confirm whether a documented substitution or amendment is needed.</p>
+  </div>
+</section>
+
+<footer>
+  Prepared 14 September 2026 · re-baselined 4 October 2026 · Logic Technology, Inc. for GE Vernova Advanced Research Center<br>
+  Source: SOW scope, Phase 1 (October – November 2026). Supersedes the earlier September–October framing.
+</footer>
+
+</div>
